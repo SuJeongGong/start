@@ -3,11 +3,10 @@ package study.spring.start;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import study.spring.start.repository.JdbcMemberRepository;
-import study.spring.start.repository.MemberRepository;
-import study.spring.start.repository.MemoryMemberRepository;
+import study.spring.start.repository.*;
 import study.spring.start.service.MemberService;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
 /**
@@ -29,21 +28,29 @@ public class SpringConfig {
      * application.properties 파일을 읽으면서, DataSource부분을 다 load하면서 DataSource는 생성해서 스프링 컨테이너에 넣어둠
      * 이미 생성한 DataSource를 여기 있는 dataSource로 연결
      */
-    private DataSource dataSource;
+//    private final DataSource dataSource;
+//    public SpringConfig(DataSource dataSource) {
+//        this.dataSource = dataSource;
+//    }
+
+    private final EntityManager em;
+
     @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public SpringConfig(EntityManager em){
+        this.em = em;
     }
 
     @Bean
-    public MemberService memberService(){
+    public MemberService memberService() {
         return new MemberService(memberRepository());
     }
-
     @Bean
     public MemberRepository memberRepository() {
-//        return new MemoryMemberRepository();
-        return new JdbcMemberRepository(dataSource);
+// return new MemoryMemberRepository();
+//        return new JdbcMemberRepository(dataSource);
+//        return new JdbcTemplateMemberRepository(dataSource);
+        return new JpaMemeberRepository(em);
+    }
 
         /**
          * spring을 쓰는 이유
@@ -51,5 +58,4 @@ public class SpringConfig {
          * 다형성을 활용한 예시
          * : 원래는 인터페이스를 두고, 구현체는 MemoryMemberRepository만 JdbcMemberRepository로 변경
          */
-    }
 }

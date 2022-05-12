@@ -9,15 +9,17 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'	//자바 버전
 
 repositories {		//라이브러리를
-	mavenCentral()	//아래에 dependencies에 적혀 있는 것들을 mavenCentral이라고 공개된 사이트가 있는데 이곳에서 자동으로 다운로드 받게 설정
+	mavenCentral()	//아래에 dependencies 적혀 있는 것들을 mavenCentral 이라고 공개된 사이트가 있는데 이곳에서 자동으로 다운로드 받게 설정
 }
 
 dependencies {		//
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'// html 만드는 템플릿 엔진 추가한것
 	implementation 'org.springframework.boot:spring-boot-starter-web'	//웹프로젝트 선택한것
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'	//테스트 라이브러리( 요즘에는 자동으로 들어감 )
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'	// jdbc 관련
-	runtimeOnly 'com.h2database:h2'	// h2 db관련(클라이언트)
+//	implementation 'org.springframework.boot:spring-boot-starter-jdbc'	// jdbc 관련
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'	// jpa 관련 (jpa 와 jdbc 포함)
+
+	runtimeOnly 'com.h2database:h2'	// h2 db 관련(클라이언트)
 }
 
 tasks.named('test') {

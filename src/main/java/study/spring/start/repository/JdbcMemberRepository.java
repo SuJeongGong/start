@@ -20,13 +20,13 @@ import java.util.Optional;
  * ----------------------------------------------------------------
  * 2022-04-04       SuJeong Gong        최초작성
  */
-public class JdbcMemberRepository implements MemberRepository {
 
+
+public class JdbcMemberRepository implements MemberRepository {
     private final DataSource dataSource;
     public JdbcMemberRepository(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-
     @Override
     public Member save(Member member) {
         String sql = "insert into member(name) values(?)";
@@ -55,7 +55,6 @@ public class JdbcMemberRepository implements MemberRepository {
             close(conn, pstmt, rs);
         }
     }
-
     @Override
     public Optional<Member> findById(Long id) {
         String sql = "select * from member where id = ?";
